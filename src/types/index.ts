@@ -18,3 +18,15 @@ export interface Toast {
   message: string;
   type: ToastType;
 }
+
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  date: string;
+  startTime?: string;
+  endTime?: string;
+  description?: string;
+  color: string;
+  createdAt: number;
+  updatedAt: number;
+}

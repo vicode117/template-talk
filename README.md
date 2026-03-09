@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# Rose's Toolbox
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[中文文档](./README.zh-CN.md) | English
 
-Currently, two official plugins are available:
+A personal multi-app toolbox with an iPhone-inspired home screen. All data is stored locally in IndexedDB — no backend required.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+### Home Screen
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+An iPhone springboard-style launcher with animated gradient wallpaper, live clock, app icon grid, and a frosted-glass dock.
 
-## Expanding the ESLint configuration
+### Template Talk (模板话术)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Create and manage reusable text templates with dynamic variables.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Create, edit, duplicate, and delete templates
+- Insert variables using `@` trigger (e.g. `{{name}}`, `{{time}}`)
+- Fill in variables and generate final text with one click
+- Auto-copy generated text to clipboard
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Calendar (日历)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+A monthly calendar with event management.
+
+- Monthly grid view with event dot indicators
+- Navigate between months
+- Create, edit, and delete events
+- Event properties: title, date, time range, description, color label
+- Day detail panel showing all events for a selected date
+
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Framework | React 19 |
+| Language | TypeScript 5.9 |
+| Build Tool | Vite 7 |
+| Styling | Tailwind CSS 4 |
+| Routing | React Router 7 |
+| Storage | IndexedDB (via idb) |
+| Linting | ESLint 9 |
+| Package Manager | pnpm |
+
+## Project Structure
+
+```
+src/
+  main.tsx                        # Entry point, BrowserRouter setup
+  App.tsx                         # Route definitions
+  index.css                       # Global styles
+  types/index.ts                  # Shared type definitions
+  components/
+    HomeScreen.tsx                # iPhone-style home screen
+    Toast.tsx                     # Shared toast notifications
+  apps/
+    template-talk/
+      TemplateTalkApp.tsx         # Template Talk main page
+      components/                 # AddButton, Card, TemplateForm, VariableForm
+      hooks/useTemplates.ts       # IndexedDB CRUD for templates
+      utils/variables.ts          # Variable extraction & replacement
+    calendar/
+      CalendarApp.tsx             # Calendar main page
+      components/                 # MonthView, DayDetail, EventForm
+      hooks/useCalendarEvents.ts  # IndexedDB CRUD for events
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js >= 18
+- pnpm
+
+### Install & Run
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start dev server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
 ```
+
+### Usage
+
+1. Open the app in your browser (default: `http://localhost:5173`)
+2. The home screen displays all available apps as icons
+3. Tap **模板话术** to manage text templates
+4. Tap **日历** to manage calendar events
+5. Use the back button in each app to return to the home screen
+
+## License
+
+MIT

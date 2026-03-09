@@ -14,12 +14,10 @@ interface Variable {
   suggested: boolean;
 }
 
-// 获取光标位置相对于视口的坐标
 function getCaretCoordinates(element: HTMLTextAreaElement, position: number): { top: number; left: number; bottom: number } | null {
   const div = document.createElement('div');
   const computedStyle = window.getComputedStyle(element);
 
-  // 复制 textarea 的样式
   const properties = [
     'direction',
     'boxSizing',
@@ -59,7 +57,6 @@ function getCaretCoordinates(element: HTMLTextAreaElement, position: number): { 
   div.style.whiteSpace = 'pre-wrap';
   div.style.wordWrap = 'break-word';
 
-  // 设置文本内容到光标位置
   const text = element.value.substring(0, position);
   const trailing = element.value.substring(position, position + 1) || ' ';
   div.textContent = text + trailing;
@@ -89,7 +86,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const variablesRef = useRef<HTMLDivElement>(null);
 
-  // 从现有内容提取变量
   const extractVariables = useCallback((text: string): Variable[] => {
     const regex = /\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}/g;
     const matches = [...text.matchAll(regex)];
@@ -105,7 +101,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
     }));
   }, []);
 
-  // 所有变量（已使用 + 常用）
   const allVariables = [
     ...extractVariables(content),
     { name: 'name', suggested: true },
@@ -116,12 +111,10 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
     { name: 'title', suggested: true },
   ];
 
-  // 去重
   const uniqueVariables = allVariables.filter(
     (v, i, arr) => arr.findIndex((x) => x.name === v.name) === i
   );
 
-  // 过滤变量
   const filteredVariables = uniqueVariables.filter((v) =>
     v.name.toLowerCase().includes(variableSearch.toLowerCase())
   );
@@ -141,7 +134,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
     }
   }, [isOpen, editTemplate, initialContent]);
 
-  // 检测 @ 输入并计算面板位置
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     const selectionStart = e.target.selectionStart;
@@ -152,21 +144,17 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
       setVariableSearch(atMatch[1]);
       setShowVariablePanel(true);
 
-      // 计算光标位置
       const textarea = textareaRef.current;
       if (textarea) {
         const coords = getCaretCoordinates(textarea, selectionStart);
         if (coords) {
-          // 面板尺寸
           const panelWidth = 220;
           const panelHeight = 200;
           const margin = 10;
 
-          // 获取视口信息
           const viewportWidth = window.innerWidth;
           const viewportHeight = window.innerHeight;
 
-          // 检查右下方是否有足够空间
           const spaceOnRight = viewportWidth - coords.left - margin;
           const spaceOnBottom = viewportHeight - coords.bottom - margin;
 
@@ -177,16 +165,13 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
           let left: number;
 
           if (hasSpaceOnRight && hasSpaceOnBottom) {
-            // 右下方空间足够，显示在右下方
             top = coords.bottom + margin;
             left = coords.left + margin;
           } else {
-            // 空间不足，显示在左上方
             top = coords.top - panelHeight - margin;
             left = coords.left - panelWidth - margin;
           }
 
-          // 确保不超出视口边界
           if (top < margin) top = margin;
           if (left < margin) left = margin;
           if (top + panelHeight > viewportHeight - margin) {
@@ -206,7 +191,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
     setContent(value);
   };
 
-  // 插入变量
   const insertVariable = (varName: string) => {
     if (!textareaRef.current) return;
 
@@ -215,32 +199,27 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
     const beforeCaret = content.slice(0, selectionStart);
     const afterCaret = content.slice(selectionStart);
 
-    // 找到 @ 的位置
     const atIndex = beforeCaret.lastIndexOf('@');
 
-    // 移除 @ 及其后面的搜索文本，插入 {{变量名}}
     const newContent =
       beforeCaret.slice(0, atIndex) + `{{${varName}}}` + afterCaret;
 
     setContent(newContent);
     setShowVariablePanel(false);
 
-    // 设置光标位置
     setTimeout(() => {
       textarea.focus();
-      const newCursorPos = atIndex + varName.length + 4; // {{ 和 }} 共4个字符
+      const newCursorPos = atIndex + varName.length + 4;
       textarea.setSelectionRange(newCursorPos, newCursorPos);
     }, 0);
   };
 
-  // 添加新变量
   const addNewVariable = () => {
     if (variableSearch.trim()) {
       insertVariable(variableSearch.trim());
     }
   };
 
-  // 处理键盘导航
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (showVariablePanel) {
       if (e.key === 'Escape') {
@@ -260,7 +239,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
     onClose();
   };
 
-  // 点击外部关闭面板
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -324,7 +302,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
               }}
             />
 
-            {/* 变量选择面板 - 使用 fixed 定位 */}
             {showVariablePanel && panelPosition && (
               <div
                 ref={variablesRef}
@@ -335,7 +312,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
                   width: '220px',
                 }}
               >
-                {/* 新建变量选项 */}
                 {variableSearch && !filteredVariables.find((v) => v.name === variableSearch) && (
                   <button
                     onClick={addNewVariable}
@@ -348,7 +324,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
                   </button>
                 )}
 
-                {/* 已有变量列表 */}
                 {filteredVariables.map((v) => (
                   <button
                     key={v.name}
@@ -371,7 +346,6 @@ export function TemplateForm({ isOpen, onClose, onSave, editTemplate, initialCon
             )}
           </div>
 
-          {/* 变量预览提示 */}
           {content.includes('{{') && (
             <div className="text-xs text-gray-500 bg-gray-50 rounded px-3 py-2">
               检测到 {extractVariables(content).length} 个变量：{' '}

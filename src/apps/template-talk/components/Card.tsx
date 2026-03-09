@@ -30,7 +30,6 @@ export function Card({ template, onEdit, onDelete, onDuplicate, onGenerate }: Ca
         </span>
 
         <div className="flex gap-1">
-          {/* 生成按钮 - 高频使用，醒目显示，带文字 */}
           <button
             onClick={() => onGenerate(template)}
             className="flex items-center gap-1 px-3 py-1.5 bg-green-500 text-white text-xs font-medium rounded-lg hover:bg-green-600 transition-colors shadow-sm"
@@ -42,7 +41,6 @@ export function Card({ template, onEdit, onDelete, onDuplicate, onGenerate }: Ca
             <span>生成</span>
           </button>
 
-          {/* 低频操作 - 只显示图标 */}
           <button
             onClick={() => onDuplicate(template)}
             className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
