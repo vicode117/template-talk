@@ -32,6 +32,15 @@ const apps: AppItem[] = [
       </svg>
     ),
   },
+  {
+    id: 'hospital-bag',
+    name: '待产清单',
+    path: '/hospital-bag',
+    bgColor: 'bg-gradient-to-br from-pink-400 to-rose-500',
+    icon: (
+      <span className="text-3xl">🍼</span>
+    ),
+  },
 ];
 
 function Clock() {

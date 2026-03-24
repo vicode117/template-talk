@@ -30,3 +30,19 @@ export interface CalendarEvent {
   createdAt: number;
   updatedAt: number;
 }
+
+export interface ChecklistItem {
+  id: string;
+  name: string;
+  note: string;
+  checked: boolean;
+  isCustom?: boolean;
+}
+
+export interface ChecklistCategory {
+  id: string;
+  icon: string;
+  title: string;
+  color: string;
+  items: ChecklistItem[];
+}
