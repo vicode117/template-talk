@@ -52,6 +52,15 @@ const apps: AppItem[] = [
       </svg>
     ),
   },
+  {
+    id: 'report260827',
+    name: 'report260827',
+    path: '/report260827',
+    bgColor: 'bg-gradient-to-br from-teal-400 to-cyan-600',
+    icon: (
+      <span className="text-3xl">🩺</span>
+    ),
+  },
 ];
 
 function Clock() {
