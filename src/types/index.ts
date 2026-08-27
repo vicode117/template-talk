@@ -46,3 +46,10 @@ export interface ChecklistCategory {
   color: string;
   items: ChecklistItem[];
 }
+
+export interface FlightTodoItem {
+  id: string;
+  text: string;
+  completed: boolean;
+  category: string;
+}

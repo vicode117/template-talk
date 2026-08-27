@@ -5,9 +5,9 @@ import { ToastComponent, useToast } from '@/components/Toast';
 
 const STORAGE_KEY = 'hospital-bag-checklist';
 
-const DEFAULT_CATEGORIES: Omit<ChecklistCategory, 'items'> & {
+const DEFAULT_CATEGORIES: (Omit<ChecklistCategory, 'items'> & {
   items: Omit<ChecklistItem, 'id' | 'checked'>[];
-}[] = [
+})[] = [
   {
     id: 'docs',
     icon: '📋',

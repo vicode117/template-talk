@@ -1,0 +1,340 @@
+/*
+ * 飞行准备清单样式
+ * 所有选择器都限定在 .flight-todo-app 下，避免与宿主应用的其他 app 相互影响
+ */
+
+/* 页面容器（独立应用时期的 :root / body 样式收敛到这里） */
+.flight-todo-app {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  overflow-x: hidden;
+  background-color: #f0f2f5;
+  color: #213547;
+  line-height: 1.5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.flight-todo-app *,
+.flight-todo-app *::before,
+.flight-todo-app *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 主容器样式 */
+.flight-todo-app .todo-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 标题和语言切换 */
+.flight-todo-app .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.flight-todo-app h1 {
+  text-align: center;
+  color: #333;
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.flight-todo-app .language-toggle {
+  padding: 8px 16px;
+  background-color: #f0f8ff;
+  color: #0277bd;
+  border: 1px solid #e1f5fe;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.flight-todo-app .language-toggle:hover {
+  background-color: #e1f5fe;
+  transform: translateY(-2px);
+}
+
+/* 表单样式 */
+.flight-todo-app .todo-form {
+  margin-bottom: 2rem;
+}
+
+.flight-todo-app .form-group {
+  display: flex;
+  gap: 8px;
+}
+
+.flight-todo-app .todo-input {
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.flight-todo-app .category-select {
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.flight-todo-app .add-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.flight-todo-app .add-button:hover {
+  background-color: #388e3c;
+}
+
+/* 分类摘要 */
+.flight-todo-app .category-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.flight-todo-app .category-badge {
+  padding: 6px 12px;
+  background-color: #e1f5fe;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  color: #0277bd;
+}
+
+/* 过滤器样式 */
+.flight-todo-app .todo-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.flight-todo-app .todo-filters button {
+  padding: 6px 12px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: inherit;
+}
+
+.flight-todo-app .todo-filters button.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+/* 进度条 */
+.flight-todo-app .progress-bar {
+  height: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.flight-todo-app .progress {
+  height: 100%;
+  background-color: #4caf50;
+  text-align: center;
+  color: white;
+  font-size: 0.8rem;
+  line-height: 20px;
+  transition: width 0.3s ease;
+}
+
+/* 任务项样式 */
+.flight-todo-app .todo-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flight-todo-app .todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  border-left: 4px solid #2196f3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.flight-todo-app .todo-item.completed {
+  border-left-color: #4caf50;
+  opacity: 0.7;
+}
+
+.flight-todo-app .todo-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.flight-todo-app .todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.flight-todo-app .todo-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.flight-todo-app .todo-text {
+  font-size: 1rem;
+  color: #333;
+}
+
+.flight-todo-app .todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.flight-todo-app .todo-category {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+.flight-todo-app .delete-button {
+  background: none;
+  border: none;
+  color: #f44336;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.flight-todo-app .delete-button:hover {
+  color: #d32f2f;
+}
+
+.flight-todo-app .empty-message {
+  text-align: center;
+  color: #888;
+  padding: 1rem;
+}
+
+/* 移动端：卡片全屏贴边展示 */
+.flight-todo-app.mobile .todo-container {
+  border-radius: 0;
+  margin: -1rem;
+  width: calc(100% + 2rem);
+  box-shadow: none;
+}
+
+.flight-todo-app.mobile .todo-container h1,
+.flight-todo-app.mobile h1 {
+  font-size: 1.75rem;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+  .flight-todo-app {
+    padding: 1rem;
+  }
+
+  .flight-todo-app .todo-container {
+    padding: 1.5rem;
+    margin: 0 10px;
+    border-radius: 6px;
+  }
+
+  .flight-todo-app .form-group {
+    flex-direction: column;
+  }
+
+  .flight-todo-app .header-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .flight-todo-app h1 {
+    font-size: 2rem;
+  }
+
+  .flight-todo-app .todo-filters {
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .flight-todo-app .todo-filters button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .flight-todo-app .category-badge {
+    font-size: 0.8rem;
+  }
+
+  .flight-todo-app .todo-item {
+    padding: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .flight-todo-app {
+    padding: 0.5rem;
+  }
+
+  .flight-todo-app .todo-container {
+    padding: 1rem;
+  }
+
+  .flight-todo-app h1 {
+    font-size: 1.5rem;
+  }
+
+  .flight-todo-app .language-toggle {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .flight-todo-app .todo-input,
+  .flight-todo-app .category-select,
+  .flight-todo-app .add-button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+
+  .flight-todo-app .todo-text {
+    font-size: 0.9rem;
+  }
+
+  .flight-todo-app .delete-button {
+    font-size: 1.3rem;
+  }
+}

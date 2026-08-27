@@ -31,7 +31,6 @@ function YearMonthPicker({
   onClose: () => void;
 }) {
   const [pickerYear, setPickerYear] = useState(year);
-  const [pickerMonth, setPickerMonth] = useState(month);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -84,7 +83,6 @@ function YearMonthPicker({
             <button
               key={m}
               onClick={() => {
-                setPickerMonth(m);
                 onSelect(pickerYear, m);
               }}
               className={`py-2 rounded-lg text-sm font-medium transition-colors
